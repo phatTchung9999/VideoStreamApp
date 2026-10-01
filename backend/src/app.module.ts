@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { Module, RequestMethod, MiddlewareConsumer } from '@nestjs/common';
 import { createObserveModule } from '@nestjs/observe';
 import { AppController } from './app.controller.js';
@@ -12,7 +13,7 @@ import { Video, VideoSchema } from './model/video.schema.js';
 import { User, UserSchema } from './model/user.schema.js';
 import { JwtModule } from '@nestjs/jwt';
 import { secret } from './utils/constants.js';
-import { join } from 'path/posix';
+import { join } from 'node:path';
 import { Server } from 'http';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -47,7 +48,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       signOptions: { expiresIn: '2h' },
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
+      rootPath: join(process.cwd(), 'public'),
     }),
 
   ],

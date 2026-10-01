@@ -2,8 +2,9 @@ import { JwtService } from '@nestjs/jwt';
 import { Injectable, NestMiddleware, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { UserService } from './service/user.service.js';
-interface UserRequest extends Request {
-    user: any
+import type { User } from './model/user.schema.js';
+export interface UserRequest extends Request {
+    user: User
 }
 @Injectable()
 export class isAuthenticated implements NestMiddleware {

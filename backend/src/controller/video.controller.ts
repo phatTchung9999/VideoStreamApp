@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, UseInterceptors, UploadedFiles, Put, Req, Res, Query } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, UseInterceptors, UploadedFiles, Put, Req, Res, Query } from "@nestjs/common";
 import { Video } from "../model/video.schema.js"
 import { VideoService } from "../service/video.service.js";
-import { FileFieldsInterceptor, FilesInterceptor } from "@nestjs/platform-express";
+import { FileFieldsInterceptor } from "@nestjs/platform-express";
 
 import type { Response, Request } from "express";
+import type { UserRequest } from "../app.middleware.js";
 
 @Controller('/api/v1/video')
 export class VideoController {
@@ -13,8 +14,13 @@ export class VideoController {
         { name: 'video', maxCount: 1 },
         { name: 'cover', maxCount: 1 },
     ]))
-    async createBook(@Res() response: Response, @Req() request: Request, @Body() video: Video, @UploadedFiles() files: { video?: Express.Multer.File[], cover?: Express.Multer.File[] }) {
-        const requestBody = { createdBy: request.user, title: video.title, video: files.video[0].filename, coverImage: files.cover[0].filename }
+    async createBook(@Res() response: Response, @Req() request: UserRequest, @Body() video: Video, @UploadedFiles() files: { video?: Express.Multer.File[], cover?: Express.Multer.File[] } | undefined) {
+        const videoFile = files?.video?.[0];
+        const coverFile = files?.cover?.[0];
+        if (!videoFile || !coverFile) {
+            throw new BadRequestException('Both video and cover files are required');
+        }
+        const requestBody = { createdBy: request.user, title: video.title, video: videoFile.filename, coverImage: coverFile.filename }
         const newVideo = await this.videoService.createVideo(requestBody);
         return response.status(HttpStatus.CREATED).json({
             newVideo
