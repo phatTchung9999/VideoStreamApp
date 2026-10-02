@@ -26,14 +26,14 @@ export class UserService {
         if (foundUser) {
             const { password } = foundUser;
             if (await bcrypt.compare(user.password, password)) {
-                const payload = { email: user.email };
+                const payload = { email: foundUser.email };
                 return {
                     token: jwt.sign(payload),
                 };
             }
-            return new HttpException('Incorrect username or password', HttpStatus.UNAUTHORIZED)
+            throw new HttpException('Incorrect username or password', HttpStatus.UNAUTHORIZED)
         }
-        return new HttpException('Incorrect username or password', HttpStatus.UNAUTHORIZED)
+        throw new HttpException('Incorrect username or password', HttpStatus.UNAUTHORIZED)
     }
     async getOne(email: string): Promise<User | null> {
         return await this.userModel.findOne({ email }).exec();

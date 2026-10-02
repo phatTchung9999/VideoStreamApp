@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
+import { Box, Button, TextField } from '@mui/material';
 
 
 export default function SignUp() {
@@ -30,37 +31,59 @@ export default function SignUp() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type='text'
-                name='lname'
-                placeholder='Last Name'
-            />
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: {xs: '100%', sm: '50%'},
+                height: '100vh',
+            }}
+        >
+            <form 
+                onSubmit={handleSubmit}
+                style={{
+                    width: '70%',
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "16px",
+                }}
+            >
+                <TextField
+                    type='text'
+                    name='lname'
+                    placeholder='Last Name'
+                />
 
-            <input
-                type='text'
-                name='fname'
-                placeholder='First Name'
-            />
+                <TextField
+                    type='text'
+                    name='fname'
+                    placeholder='First Name'
+                />
 
-            <input
-                type='email'
-                name='email'
-                placeholder='Email'
-            />
+                <TextField
+                    type='email'
+                    name='email'
+                    placeholder='Email'
+                />
 
-            <input
-                type='password'
-                name='password'
-                placeholder='Password'
-            />
+                <TextField
+                    type='password'
+                    name='password'
+                    placeholder='Password'
+                />
 
-            <button type='submit'>
-                Sign Up
-            </button>
-            {errorMessage && (
-                <p>{errorMessage}</p>
-            )}
-        </form>
+                <Button 
+                    type='submit'
+                    variant='contained'
+                >
+                    Sign Up
+                </Button>
+                {errorMessage && (
+                    <p>{errorMessage}</p>
+                )}
+            </form>
+        </Box>
     );
 }

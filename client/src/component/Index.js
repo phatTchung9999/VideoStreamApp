@@ -8,6 +8,7 @@ import {
     Routes,
     Route
 } from "react-router-dom";
+import { Container } from "@mui/material";
 
 
 
@@ -16,23 +17,31 @@ export default function Index(props) {
     return (
         <div>
             <Header isLoggedIn={isLoggedIn} />
-            <BrowserRouter>
-                {isLoggedIn ?
-                    <Routes>
-                        <Route path="/video" element={<VideoList setIsLoggedIn={setIsLoggedIn}/>}>
-                        </Route>
-                        <Route path="/video/:id" element={<Video setIsLoggedIn={setIsLoggedIn}/>}>
-                        </Route>
-                    </Routes>
-                    :
-                    <Routes>
-                        <Route path="/" element={<SignIn setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />}>
-                        </Route>
-                        <Route path="/signup" element={<SignUp setIsLoggedIn={setIsLoggedIn} />}>
-                        </Route>
-                    </Routes>
-                }
-            </BrowserRouter>
+            <Container
+                sx={{
+                    display: 'flex',
+                    width: '90vw',
+                    justifyContent: 'center',
+                }}
+            >
+                <BrowserRouter>
+                    {isLoggedIn ?
+                        <Routes>
+                            <Route path="/video" element={<VideoList setIsLoggedIn={setIsLoggedIn}/>}>
+                            </Route>
+                            <Route path="/video/:id" element={<Video setIsLoggedIn={setIsLoggedIn}/>}>
+                            </Route>
+                        </Routes>
+                        :
+                        <Routes>
+                            <Route path="/" element={<SignIn setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />}>
+                            </Route>
+                            <Route path="/signup" element={<SignUp setIsLoggedIn={setIsLoggedIn} />}>
+                            </Route>
+                        </Routes>
+                    }
+                </BrowserRouter>
+            </Container>
         </div>
 
     )

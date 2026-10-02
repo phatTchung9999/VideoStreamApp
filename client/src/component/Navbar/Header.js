@@ -85,9 +85,10 @@ export default function SearchAppBar({isLoggedIn}) {
                         variant="h6"
                         noWrap
                         component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                        sx={{ flexGrow: 1, display: { xs: 'bloxk', sm: 'block' } }}
+                        alignText={{ xs: 'center', sm: 'left' }}
                     >
-                        Streamly
+                        MyStorage
                     </Typography>
                     {isLoggedIn &&
                         <>
